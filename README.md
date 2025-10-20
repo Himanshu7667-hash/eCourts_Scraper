@@ -1,7 +1,7 @@
 # eCourts Case & Cause List Scraper
 
 A smart Python-based tool to fetch, parse, and download court cause lists directly from eCourts India.
-Designed for automation, accuracy, and simplicity — whether you're tracking a specific case or analyzing full daily listings.
+Designed for automation, accuracy, and simplicity whether you're tracking a specific case or analyzing full daily listings.
 
 ## 📖 Overview
 The eCourts Case Scraper is a Python project that helps users automatically extract court listings, case details, and PDFs from India’s official eCourts portal.
