@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Case Mini Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f7f7f7; }
+    h1 { text-align: center; color: #333; }
+    input { width: 90%; max-width: 400px; padding: 8px; margin-bottom: 10px; border-radius: 8px; border: 2px solid #0047ab; outline: none; }
+    input:focus { border-color: #ff6600; }
+    button { padding: 5px 10px; margin: 5px; border-radius: 5px; border: none; background: #0047ab; color: #fff; cursor: pointer; }
+    button:hover { background: #ff6600; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: block; overflow-x: auto; }
+    th, td { padding: 10px; border-bottom: 1px solid #ddd; text-align: left; white-space: nowrap; }
+    th { background-color: #0047ab; color: white; text-transform: uppercase; }
+    tr:nth-child(even) { background-color: #f9f9f9; }
+    tr:hover { background-color: #f1f1f1; }
+  </style>
+</head>
+<body>
+  <h1>Case Mini Dashboard</h1>
+  <center>
+    <input type="text" id="search" placeholder="Search by CNR or Case Name..." onkeyup="filterCases()">
+    <div>
+      <button onclick="sortTable('Serial')">Sort by Serial</button>
+      <button onclick="sortTable('Date')">Sort by Date</button>
+    </div>
+  </center>
+  <table id="cases">
+    <thead>
+      <tr>
+        <th>Serial</th>
+        <th>CNR</th>
+        <th>Court</th>
+        <th>Case Type</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody id="case-body"></tbody>
+  </table>
+
+  <script>
+    const JSON_URL = "https://raw.githubusercontent.com/Nithya059/ecourts-causelist-scraper/main/mini_dashboard/cause_list.json";
+    let cases = [];
+
+    async function loadCases() {
+      try {
+        const res = await fetch(JSON_URL);
+        const data = await res.json();
+        cases = data.cases || [];
+        renderTable(cases);
+      } catch (err) {
+        console.error("Failed to load JSON:", err);
+        document.getElementById("case-body").innerHTML = `<tr><td colspan="5">Failed to load cases.</td></tr>`;
+      }
+    }
+
+    function renderTable(list) {
+      const tbody = document.getElementById("case-body");
+      tbody.innerHTML = "";
+      if(list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5">No cases found.</td></tr>`;
+        return;
+      }
+      list.forEach(c => {
+        const row = `<tr>
+          <td>${c.Serial || ''}</td>
+          <td>${c.CNR || ''}</td>
+          <td>${c.Court || ''}</td>
+          <td>${c["Case Type"] || ''}</td>
+          <td>${c.Date || ''}</td>
+        </tr>`;
+        tbody.innerHTML += row;
+      });
+    }
+
+    function filterCases() {
+      const query = document.getElementById("search").value.toLowerCase();
+      const filtered = cases.filter(c =>
+        (c.CNR || '').toLowerCase().includes(query) ||
+        (c.Court || '').toLowerCase().includes(query) ||
+        (c["Case Type"] || '').toLowerCase().includes(query)
+      );
+      renderTable(filtered);
+    }
+
+    function sortTable(key) {
+      cases.sort((a, b) => {
+        if(key === 'Date') {
+          return new Date(a[key]) - new Date(b[key]);
+        } else {
+          if(a[key] < b[key]) return -1;
+          if(a[key] > b[key]) return 1;
+          return 0;
+        }
+      });
+      renderTable(cases);
+    }
+
+    loadCases();
+  </script>
+</body>
+</html>
