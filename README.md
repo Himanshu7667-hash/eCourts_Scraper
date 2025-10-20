@@ -1,7 +1,7 @@
 # eCourts Scraper 🏛️
 
 ## 📖 Overview
-This project is part of my internship task — a Python script that scrapes cause lists from Indian eCourts website and downloads the PDF if available.
+A Python script that scrapes cause lists from Indian eCourts website and downloads the PDF if available.
 
 ## 🚀 Features
 - Fetch court cause lists automatically.
@@ -59,9 +59,6 @@ To view the data dashboard:
 
 1. Open the **`index.html`** file in your repo.  
 2. Click **“Raw”** → then long press and copy the link.  
-3. Visit
-https://htmlpreview.github.io/?https://raw.githubusercontent.com/Nithya059/ecourts-causelist-scraper/main/mini_dashboard/index.html
-5. Paste your raw file link — your dashboard will open instantly!
 
 
 
