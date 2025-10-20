@@ -20,11 +20,17 @@ You can:
 
 ## 🚀 Features
 ✅ Fetch cause lists or individual case listings from eCourts.
+
 ✅ Search by CNR, case details, or court name.
+
 ✅ Works with both district and state courts.
+
 ✅ Automatic PDF download of cause lists (if available).
+
 ✅ Saves data as JSON for easy reuse or analysis.
+
 ✅ Flask web dashboard for viewing listings in your browser.
+
 ✅ Built-in error handling for HTML changes on court websites.
 
 ## 🧩 Files
